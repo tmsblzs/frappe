@@ -531,7 +531,7 @@ def send_one(email, smtpserver=None, auto_commit=True, now=False):
 					queue = frappe.get_cached_doc("Email Queue", email.name)
 					method(queue, email.sender, recipient.recipient, message)
 				else:
-					smtpserver.sess.sendmail(email.sender, recipient.recipient, message)
+					smtpserver.sess.sendmail(email.sender, recipient.recipient, message.encode('utf-8'))
 
 			recipient.status = "Sent"
 			frappe.db.sql(
